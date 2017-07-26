@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 public class Main extends Application {
 	
 	
+	private InputScene inputScene = new InputScene();
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -24,11 +25,12 @@ public class Main extends Application {
 			Label charInfo = new Label();
 			charInfo.setText(testChar.printChar());
 			root.add(charInfo, 0, 0);
+			Scene testscene = inputScene.createInputScene();
 			// --------------------------------------
 			
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
+			primaryStage.setScene(testscene);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

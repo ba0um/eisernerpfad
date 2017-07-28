@@ -6,8 +6,8 @@ package info;
 public class CharInitialize {
 	
 	
-	public CharInfo info = new CharInfo();
-	
+	private CharInfo charInfo = new CharInfo();
+	public CharInfo info = charInfo;
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	/*

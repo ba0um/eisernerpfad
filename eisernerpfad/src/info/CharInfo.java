@@ -33,7 +33,7 @@ public class CharInfo {
 	/**
 	 * The enum of all hair colors available.
 	 */
-	private enum charHairColorEnum{
+	public enum charHairColorEnum{
 		RED, 
 		BROWN, BROWN_DARK,
 		BLOND, BLOND_LIGHT, BLOND_DARK, BLOND_WHITE,
@@ -48,7 +48,7 @@ public class CharInfo {
 	/**
 	 * The enum of all eye colors available.
 	 */
-	private enum charEyeColorEnum{
+	public enum charEyeColorEnum{
 		BLACK, GREY,
 		BLUE,
 		GREEN,
@@ -69,7 +69,7 @@ public class CharInfo {
 	/**
 	 * The enum of all races available.
 	 */
-	private enum charRaceEnum{
+	public enum charRaceEnum{
 		HALF_AETERNA,
 		NEHRIM,
 		ARAZEAL,
@@ -86,11 +86,11 @@ public class CharInfo {
 	/**
 	 * The enum of all cultures available.
 	 */
-	private enum charCultureEnum{
+	public enum charCultureEnum{
 		// Nehrim options
 		NEHRIM_FREE, NEHRIM_SOUTH, NEHRIM_MIDDLE,
 		
-		// Arzeal options
+		// Arazeal options
 		ARAZEAL_FREE, ARAZEAL_CIVILIZED, 
 		
 		// Kile options
@@ -116,7 +116,7 @@ public class CharInfo {
 	/**
 	 * The enum of all paths available.
 	 */
-	private enum charPathEnum{
+	public enum charPathEnum{
 		SUBLIME, ERUDITE, MANUFACTURER, PATHLESS
 	}
 	
@@ -128,7 +128,7 @@ public class CharInfo {
 	/**
 	 * The enum of all classes available.
 	 */
-	private enum charClassEnum{
+	public enum charClassEnum{
 		// Rogue classes
 		INFILTRATOR, VAGRANT, TRICKSTER,
 		

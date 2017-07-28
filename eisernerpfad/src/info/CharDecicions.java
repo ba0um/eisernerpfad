@@ -8,7 +8,7 @@ import info.CharInfo.charCultureEnum;
 
 public class CharDecicions {
 
-	private CharInfo info = new CharInfo();	
+	public CharInfo info = new CharInfo();	
 	private ArrayList<charCultureEnum> charCultureOptions;
 
 	public ArrayList<charCultureEnum> charCultureOptions(charRaceEnum charRace){

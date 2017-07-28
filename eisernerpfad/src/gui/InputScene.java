@@ -1,11 +1,20 @@
 package gui;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
+import info.CharDecicions;
 import info.CharInfo;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -14,9 +23,11 @@ import javafx.scene.layout.AnchorPane;
 
 public class InputScene {
 	
-	private CharInfo info = new info.CharInfo();
+	private CharDecicions decicions = new CharDecicions();
+	private CharInfo info = decicions.info;
 	
 	private Scene inputScene;
+	private AnchorPane rootPane = new AnchorPane();
 	
 	/**
 	 * Number of input scenes: <br>
@@ -26,8 +37,6 @@ public class InputScene {
 	private int sceneCount = 0;
 	
 	public Scene createInputScene(){
-		
-		AnchorPane rootPane = new AnchorPane();
 		
 		/*
 		 * Labels
@@ -95,21 +104,49 @@ public class InputScene {
 					
 				}
 				sceneCount++;
-				groupTextfields.getChildren().removeAll(groupLabels, groupTextfields);
-				// TODO change position of button
-				// TODO switch scene 
+				List<Node> listNodes = newNodes(sceneCount);
+				rootPane.getChildren().removeAll(groupLabels, groupTextfields);
+				listNodes.stream()
+					.forEach(x -> rootPane.getChildren().add(x));				
 			}
 		});
 		
 		groupButtons.getChildren().addAll(buttonNextStep);
 		
-		
-		rootPane.getChildren().addAll(groupLabels, groupTextfields, groupButtons);
+		if(sceneCount == 0) {
+			rootPane.getChildren().addAll(groupLabels, groupTextfields, groupButtons);	
+		}
 		
 		
 		inputScene = new Scene(rootPane);
 		return inputScene;
 		
 	}
+	
+	private List<Node> newNodes(int sceneCount){
+		List<Node> nodes = new ArrayList<>();
+		
+		switch (sceneCount) {
+		case 1:
+			Label labelRace = new Label("Wähle deine Rasse:");
+			TextField textfieldRace = new TextField();
+			textfieldRace.setLayoutX(140);
+			Label labelCulture = new Label ("Wähle deine Kultur:");
+			labelCulture.setLayoutY(30);
+			ComboBox cultureMenu = new ComboBox<>();
+			cultureMenu.setLayoutX(140);
+			cultureMenu.setLayoutY(30);
+			
+			nodes.add(labelRace);
+			nodes.add(textfieldRace);
+			nodes.add(labelCulture);
+			nodes.add(cultureMenu);
+			
+			break;
 
+		default:
+			break;
+		}
+		return nodes;
+	}
 }

@@ -19,6 +19,10 @@ public class CharDecicions {
 			charCultureOptions.add(charCultureEnum.NEHRIM_SOUTH);
 			charCultureOptions.add(charCultureEnum.ARAZEAL_CIVILIZED);
 			charCultureOptions.add(charCultureEnum.ARAZEAL_FREE);
+			charCultureOptions.add(charCultureEnum.KILE_FOLKS);
+			charCultureOptions.add(charCultureEnum.KILE_UPPER);
+			charCultureOptions.add(charCultureEnum.QYRA_FARM);
+			charCultureOptions.add(charCultureEnum.QYRA_FOLKS);
 			// TODO
 			break;
 		case NEHRIM:
@@ -30,8 +34,14 @@ public class CharDecicions {
 			charCultureOptions.add(charCultureEnum.ARAZEAL_CIVILIZED);
 			charCultureOptions.add(charCultureEnum.ARAZEAL_FREE);
 			break;
-			// TODO
-		
+		case KILE:
+			charCultureOptions.add(charCultureEnum.KILE_FOLKS);
+			charCultureOptions.add(charCultureEnum.KILE_UPPER);
+			break;
+		case QYRA:
+			charCultureOptions.add(charCultureEnum.QYRA_FARM);
+			charCultureOptions.add(charCultureEnum.QYRA_FOLKS);
+			break;		
 		case SKARAGG:
 			charCultureOptions.add(charCultureEnum.SKARAGG_BIG);
 			charCultureOptions.add(charCultureEnum.SKARAGG_SMALL);

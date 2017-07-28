@@ -18,6 +18,13 @@ public class InputScene {
 	
 	private Scene inputScene;
 	
+	/**
+	 * Number of input scenes: <br>
+	 * 0 = name/sex <br>
+	 * 1 = race/culture <br>
+	 */
+	private int sceneCount = 0;
+	
 	public Scene createInputScene(){
 		
 		AnchorPane rootPane = new AnchorPane();
@@ -61,8 +68,7 @@ public class InputScene {
 		toggleSexFemale.setLayoutY(30);
 		
 		groupTextfields.getChildren().addAll(textfieldName, toggleSexMale, toggleSexFemale);
-		
-		
+				
 		
 		/*
 		 * Buttons
@@ -77,17 +83,23 @@ public class InputScene {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				String charName = textfieldName.getText();
-				info.setCharName(charName);
-				
-				boolean charSex = toggleSexMale.isSelected();
-				info.setCharSex(charSex);
-				
-				System.out.println("Name: " + info.getCharName() + "\n" + "Geschlecht: " + info.isCharSex());
+				if (sceneCount == 0) {				
+
+					String charName = textfieldName.getText();
+					info.setCharName(charName);
+					
+					boolean charSex = toggleSexMale.isSelected();
+					info.setCharSex(charSex);
+					
+					System.out.println("Name: " + info.getCharName() + "\n" + "Geschlecht: " + info.isCharSex());
+					
+				}
+				sceneCount++;
+				groupTextfields.getChildren().removeAll(groupLabels, groupTextfields);
+				// TODO change position of button
+				// TODO switch scene 
 			}
 		});
-		
-		
 		
 		groupButtons.getChildren().addAll(buttonNextStep);
 		

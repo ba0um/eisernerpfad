@@ -27,9 +27,11 @@ public class Main extends Application {
 			Scene testscene = inputScene.createInputScene();
 			// --------------------------------------
 			
-			Scene scene = new Scene(root,400,400);
+			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(testscene);
+			primaryStage.setHeight(720);
+			primaryStage.setWidth(720);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

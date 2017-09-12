@@ -406,7 +406,9 @@ public class InputScene {
 			labelStr.setLayoutY(30);
 			labelDex.setLayoutY(60);
 			labelInt.setLayoutY(90);
-			System.out.println(info.getCharAttributeStrength());
+			labelCurStr = new Label();
+			labelCurDex = new Label();
+			labelCurInt = new Label();
 			labelCurStr.setText(Integer.toString(info.getCharAttributeStrength()));
 			labelCurDex.setText(Integer.toString(info.getCharAttributeDexterity()));
 			labelCurInt.setText(Integer.toString(info.getCharAttributeIntelligence()));

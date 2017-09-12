@@ -9,12 +9,14 @@ import javafx.collections.ObservableList;
 public class CharDecicions {	
 	
 	private NewCharacter newChar;
+	private CharInfo info;
 	
 	public CharDecicions(NewCharacter newCharacter) {
 		newChar = newCharacter;
+		info = newChar.getInfo();
 	}
 	
-	private CharInfo info = newChar.getInfo();
+	
 	
 	private ObservableList<String> cultureList;
 	private ObservableList<String> hairList;

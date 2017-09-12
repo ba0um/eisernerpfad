@@ -8,10 +8,13 @@ public class CharInitialize {
 	
 	
 	private NewCharacter newChar;
+	private CharInfo info;
+	
 	public CharInitialize(NewCharacter newCharacter) {
 		newChar = newCharacter;
+		info = newChar.getInfo();
 	}
-	private CharInfo info = newChar.getInfo();
+	 
 	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

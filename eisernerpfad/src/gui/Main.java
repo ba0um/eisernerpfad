@@ -21,7 +21,7 @@ public class Main extends Application {
 			// TODO Testing with the label
 			TestCharPrint testChar = new TestCharPrint();				
 			Label charInfo = new Label();
-			charInfo.setText(testChar.printChar());
+			//charInfo.setText(testChar.printChar());
 			root.add(charInfo, 0, 0);
 			Scene testscene = inputScene.createInputScene();
 			// --------------------------------------

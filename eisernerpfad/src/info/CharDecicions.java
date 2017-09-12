@@ -2,14 +2,18 @@ package info;
 
 import java.util.Random;
 
-import gui.InputScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 
-public class CharDecicions {
+public class CharDecicions {	
 	
-	private NewCharacter newChar = InputScene.getNewChar();
+	private NewCharacter newChar;
+	
+	public CharDecicions(NewCharacter newCharacter) {
+		newChar = newCharacter;
+	}
+	
 	private CharInfo info = newChar.getInfo();
 	
 	private ObservableList<String> cultureList;

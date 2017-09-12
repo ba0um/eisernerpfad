@@ -1,6 +1,5 @@
 package info;
 
-import gui.InputScene;
 
 /**
  * Sets all base values and attributes.
@@ -8,7 +7,10 @@ import gui.InputScene;
 public class CharInitialize {	
 	
 	
-	private NewCharacter newChar = InputScene.getNewChar();
+	private NewCharacter newChar;
+	public CharInitialize(NewCharacter newCharacter) {
+		newChar = newCharacter;
+	}
 	private CharInfo info = newChar.getInfo();
 	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -35,10 +37,9 @@ public class CharInitialize {
 	private final int ARCANE_FEVER_BASE = 0;
 	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 	
-	
-	
+
 	/**
 	 * Runs this to set the starting values for a new char.
 	 */

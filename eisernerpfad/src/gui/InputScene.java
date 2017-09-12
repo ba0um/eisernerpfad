@@ -29,11 +29,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 public class InputScene {
-
-	private static NewCharacter newChar = new NewCharacter();
-	public static NewCharacter getNewChar(){
-		return newChar;		
-	}
+	
+	private NewCharacter newChar = new NewCharacter();	
 	private CharDecicions decisions = newChar.getDecisions();
 	private CharInfo info = newChar.getInfo();
 	private CharInitialize init = newChar.getInit();

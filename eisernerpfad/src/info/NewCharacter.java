@@ -10,13 +10,12 @@ public class NewCharacter {
 	public CharInfo getInfo(){
 		return info;		
 	}
-	private CharDecicions decisions = new CharDecicions();
+	private CharDecicions decisions = new CharDecicions(this);
 	public CharDecicions getDecisions(){
 		return decisions;		
 	}
-	private CharInitialize init = new CharInitialize();
+	private CharInitialize init = new CharInitialize(this);
 	public CharInitialize getInit(){
 		return init;
-	}
-	
+	}	
 }

@@ -1,13 +1,21 @@
 package info;
 
+
 /**
  * Sets all base values and attributes.
  */
-public class CharInitialize {
+public class CharInitialize {	
 	
 	
-	private CharInfo charInfo = new CharInfo();
-	public CharInfo info = charInfo;
+	private NewCharacter newChar;
+	private CharInfo info;
+	
+	public CharInitialize(NewCharacter newCharacter) {
+		newChar = newCharacter;
+		info = newChar.getInfo();
+	}
+	 
+	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	/*
@@ -32,14 +40,13 @@ public class CharInitialize {
 	private final int ARCANE_FEVER_BASE = 0;
 	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 	
-	
-	
+
 	/**
 	 * Runs this to set the starting values for a new char.
 	 */
-	public void initialize(){
+	public void initializeNewChar(){
 		
 		// set base values
 		info.setCharAttributeStrength(STR_BASE);

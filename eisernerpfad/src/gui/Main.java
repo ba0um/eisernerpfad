@@ -1,5 +1,5 @@
 package gui;
-	
+
 import info.TestCharPrint;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -8,8 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 
-public class Main extends Application {
-	
+public class Main extends Application {	
 	
 	private InputScene inputScene = new InputScene();
 	
@@ -22,7 +21,7 @@ public class Main extends Application {
 			// TODO Testing with the label
 			TestCharPrint testChar = new TestCharPrint();				
 			Label charInfo = new Label();
-			charInfo.setText(testChar.printChar());
+			//charInfo.setText(testChar.printChar());
 			root.add(charInfo, 0, 0);
 			Scene testscene = inputScene.createInputScene();
 			// --------------------------------------
@@ -32,7 +31,8 @@ public class Main extends Application {
 			primaryStage.setScene(testscene);
 			primaryStage.setHeight(720);
 			primaryStage.setWidth(720);
-			primaryStage.show();
+			primaryStage.show();			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -3,9 +3,7 @@ package gui;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.ImageView;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import java.util.Optional;
@@ -36,7 +34,7 @@ public class Alerts extends Application {
 		newAlert.setTitle("Der Eiserne Pfad");
 		newAlert.setHeaderText("Information");
 		newAlert.setContentText(alertMessage);
-		newAlert.initStyle(StageStyle.UNDECORATED);
+		//newAlert.initStyle(StageStyle.UNDECORATED); // makes it so, the alert box has no frame
 
 		switch(alertType){
 		case 0: 

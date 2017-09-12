@@ -1,13 +1,16 @@
 package info;
 
+import gui.InputScene;
+
 public class TestCharPrint {
 	
-	private CharInitialize newChar = new CharInitialize();
+	private NewCharacter newChar = InputScene.getNewChar();
+	private CharInitialize init = newChar.init;
 	private CharInfo info = newChar.info;
 	private String testChar;
 
 	public String printChar(){
-		newChar.initialize();
+		init.initializeNewChar();
 		testChar = 
 				"Stärke: " + info.getCharAttributeStrength() + "\n"
 			+ 	"Gewandtheit: " + info.getCharAttributeDexterity() + "\n"

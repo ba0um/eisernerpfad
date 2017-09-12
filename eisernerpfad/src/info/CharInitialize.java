@@ -1,13 +1,16 @@
 package info;
 
+import gui.InputScene;
+
 /**
  * Sets all base values and attributes.
  */
-public class CharInitialize {
+public class CharInitialize {	
 	
 	
-	private CharInfo charInfo = new CharInfo();
-	public CharInfo info = charInfo;
+	private NewCharacter newChar = InputScene.getNewChar();
+	private CharInfo info = newChar.getInfo();
+	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	/*
@@ -39,7 +42,7 @@ public class CharInitialize {
 	/**
 	 * Runs this to set the starting values for a new char.
 	 */
-	public void initialize(){
+	public void initializeNewChar(){
 		
 		// set base values
 		info.setCharAttributeStrength(STR_BASE);

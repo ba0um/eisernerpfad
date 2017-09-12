@@ -7,6 +7,8 @@ import java.util.function.UnaryOperator;
 
 import info.CharDecicions;
 import info.CharInfo;
+import info.CharInitialize;
+import info.NewCharacter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,12 +27,16 @@ import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.converter.IntegerStringConverter;
 
 public class InputScene {
 
-	private CharDecicions decisions = new CharDecicions();
-	private CharInfo info = decisions.info;
+	private static NewCharacter newChar = new NewCharacter();
+	public static NewCharacter getNewChar(){
+		return newChar;		
+	}
+	private CharDecicions decisions = newChar.getDecisions();
+	private CharInfo info = newChar.getInfo();
+	private CharInitialize init = newChar.getInit();
 	private Alerts alerts = new Alerts();
 
 	private Scene inputScene;
@@ -48,7 +54,12 @@ public class InputScene {
 	private ComboBox<String> eyeMenu;
 	private TextField textFieldHeight;
 	private int weight;
-
+	private ToggleGroup groupPaths;
+	private TextField textProf;
+	private Label labelCurStr;
+	private Label labelCurDex;
+	private Label labelCurInt; 
+	
 
 	/**
 	 * Number of input scenes: <br>
@@ -58,7 +69,12 @@ public class InputScene {
 	private int sceneCount = 0;
 
 	public Scene createInputScene(){
-
+		
+		/*
+		 * Initialize the new character, before creating the scene.
+		 */
+		init.initializeNewChar();
+		
 		/*
 		 * Labels
 		 */
@@ -169,7 +185,20 @@ public class InputScene {
 					}
 					System.out.println("Haarfarbe: " + info.getCharHairColor() + "\n" + "Augenfarbe: " + info.getCharEyeColor()
 										+"\nGröße: " + info.getCharHeight() + "\nGewicht: " + info.getCharWeight());
-					break;				
+					break;
+				case 3:
+					String path = "Dein Pfad";
+					String prof = textProf.getText();
+					if(prof.length() > 3 && groupPaths.getSelectedToggle() != null){
+						path = groupPaths.getSelectedToggle().getUserData().toString();
+						info.setCharPath(path);
+						info.setCharProfession(prof);
+					}
+					else {
+						alerts.createNewAlert("Pfad und Profession wählen!", 2);
+						return;
+					}
+					System.out.println("Pfad: " + info.getCharPath() + "\n" + "Beruf: " + info.getCharProfession());
 				default:
 					break;
 				}
@@ -203,6 +232,7 @@ public class InputScene {
 		List<Node> nodes = new ArrayList<>();
 
 		switch (sceneCount) {
+		
 		// race / culture
 		case 1:
 			Label labelRace = new Label("Wähle deine Rasse:");
@@ -241,6 +271,7 @@ public class InputScene {
 			nodes.add(cultureMenu);
 			nodes.add(buttonNextStep);
 			break;
+			
 			// hair / eye / height
 		case 2:
 			Label labelHair = new Label("Wähle deine Haarfarbe:");
@@ -323,8 +354,111 @@ public class InputScene {
 			nodes.add(textFieldHeight);
 			nodes.add(buttonRandomHeight);
 			nodes.add(labelWeight);
-			buttonNextStep.setLayoutY(420); //TODO change value
+			buttonNextStep.setLayoutY(120);
 			nodes.add(buttonNextStep);
+			break;
+			
+		// path / role / profession	
+		case 3:
+			Label labelPath = new Label("Wähle deinen Pfad");
+			ToggleButton toggleSublime = new ToggleButton("Die Erhabenen");
+			toggleSublime.setUserData("Die Erhabenen");			
+			ToggleButton toggleErudite = new ToggleButton("Die Belesenen");
+			toggleErudite.setUserData("Die Belesenen");
+			ToggleButton toggleManufacturer = new ToggleButton("Die Schaffenden");
+			toggleManufacturer.setUserData("Die Schaffenden");
+			ToggleButton togglePathless = new ToggleButton("Die Wegelosen");
+			togglePathless.setUserData("Die Wegelosen");
+			groupPaths = new ToggleGroup();
+			toggleSublime.setToggleGroup(groupPaths);
+			toggleErudite.setToggleGroup(groupPaths);
+			toggleManufacturer.setToggleGroup(groupPaths);
+			togglePathless.setToggleGroup(groupPaths);
+			toggleSublime.setLayoutY(30);
+			toggleErudite.setLayoutY(30);
+			toggleErudite.setLayoutX(100);
+			toggleManufacturer.setLayoutY(30);
+			toggleManufacturer.setLayoutX(200);
+			togglePathless.setLayoutY(30);
+			togglePathless.setLayoutX(300);
+			
+			Label labelProf = new Label("Wähle deinen Beruf");
+			textProf = new TextField();
+			textProf.setPromptText("Dein Beruf");			
+			labelProf.setLayoutY(60);
+			textProf.setLayoutX(140);
+			textProf.setLayoutY(60);
+			
+			nodes.add(labelPath);
+			nodes.add(toggleSublime);
+			nodes.add(toggleErudite);
+			nodes.add(toggleManufacturer);
+			nodes.add(togglePathless);
+			nodes.add(labelProf);
+			nodes.add(textProf);
+			buttonNextStep.setLayoutY(90);
+			nodes.add(buttonNextStep);
+			break;
+			
+		// base stats	
+		case 4:
+			Label labelBase = new Label("Wähle deine Basiswerte:");
+			Label labelStr = new Label("Stärke:");
+			Label labelDex = new Label("Gewandtheit:");
+			Label labelInt = new Label("Intelligenz:");
+			labelStr.setLayoutY(30);
+			labelDex.setLayoutY(60);
+			labelInt.setLayoutY(90);
+			System.out.println(info.getCharAttributeStrength());
+			labelCurStr.setText(Integer.toString(info.getCharAttributeStrength()));
+			labelCurDex.setText(Integer.toString(info.getCharAttributeDexterity()));
+			labelCurInt.setText(Integer.toString(info.getCharAttributeIntelligence()));
+			labelCurStr.setLayoutX(50);
+			labelCurStr.setLayoutY(30);
+			labelCurDex.setLayoutX(50);
+			labelCurDex.setLayoutY(60);
+			labelCurInt.setLayoutX(50);
+			labelCurInt.setLayoutY(90);
+			
+			Button buttonStrPlus = new Button(" + ");
+			buttonStrPlus.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent arg0) {
+					int newBase = decisions.changeBaseStat("Str", true);
+					labelCurStr.setText(Integer.toString(newBase));
+				}				
+			});	
+			Button buttonStrMinus = new Button(" - ");
+			Button buttonDexPlus = new Button(" + ");
+			Button buttonDexMinus = new Button(" - ");
+			Button buttonIntPlus = new Button(" + ");
+			Button buttonIntMinus = new Button(" - ");
+			buttonStrPlus.setLayoutX(100);
+			buttonStrPlus.setLayoutY(30);
+			buttonStrMinus.setLayoutX(150);
+			buttonStrMinus.setLayoutY(30);
+			buttonDexPlus.setLayoutX(100);
+			buttonDexPlus.setLayoutY(60);
+			buttonDexMinus.setLayoutX(150);
+			buttonDexMinus.setLayoutY(60);
+			buttonIntPlus.setLayoutX(100);
+			buttonIntPlus.setLayoutY(90);
+			buttonIntMinus.setLayoutX(150);
+			buttonIntMinus.setLayoutY(90);			
+			
+			nodes.add(labelBase);
+			nodes.add(labelStr);
+			nodes.add(labelDex);
+			nodes.add(labelInt);
+			nodes.add(buttonStrPlus);
+			nodes.add(buttonStrMinus);
+			nodes.add(buttonDexPlus);
+			nodes.add(buttonDexMinus);
+			nodes.add(buttonIntPlus);
+			nodes.add(buttonIntMinus);			
+			buttonNextStep.setLayoutY(120); // TODO change value
+			nodes.add(buttonNextStep);
+			break;
 		default:
 			break;
 		}

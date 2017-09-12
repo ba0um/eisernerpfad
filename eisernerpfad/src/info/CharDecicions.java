@@ -2,17 +2,19 @@ package info;
 
 import java.util.Random;
 
+import gui.InputScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 
 public class CharDecicions {
-
-	public CharInfo info = new CharInfo();	
+	
+	private NewCharacter newChar = InputScene.getNewChar();
+	private CharInfo info = newChar.getInfo();
+	
 	private ObservableList<String> cultureList;
 	private ObservableList<String> hairList;
 	private ObservableList<String> eyeList;
-
 
 	/**
 	 * Changes the options for the culture drop-down-menu according to the chosen race.
@@ -295,5 +297,11 @@ public class CharDecicions {
 			break;
 		}		
 		return isAllowed;
-	}	
+	}
+
+	public int changeBaseStat(String string, boolean b) {
+		int newBase = 0;
+		
+		return newBase;
+	}
 }

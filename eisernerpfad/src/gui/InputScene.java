@@ -21,15 +21,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Pair;
+import gui.ToggleSet;
 
 public class InputScene {
-	
+
 	private NewCharacter newChar = new NewCharacter();	
 	private CharDecicions decisions = newChar.getDecisions();
 	private CharInfo info = newChar.getInfo();
@@ -38,7 +42,7 @@ public class InputScene {
 
 	private Scene inputScene;
 	private AnchorPane rootPane = new AnchorPane();
-	
+
 	/*
 	 * Variables needed in the whole class
 	 */
@@ -60,7 +64,9 @@ public class InputScene {
 	private Label labelCurInt;
 	private int curInt;
 	private int availableBonuses;
-	
+	private int adv;
+	private int dis;
+
 
 	/**
 	 * Number of input scenes: <br>
@@ -70,12 +76,12 @@ public class InputScene {
 	private int sceneCount = 0;
 
 	public Scene createInputScene(){
-		
+
 		/*
 		 * Initialize the new character, before creating the scene.
 		 */
 		init.initializeNewChar();
-		
+
 		/*
 		 * Labels
 		 */
@@ -185,7 +191,7 @@ public class InputScene {
 						return;
 					}
 					System.out.println("Haarfarbe: " + info.getCharHairColor() + "\n" + "Augenfarbe: " + info.getCharEyeColor()
-										+"\nGröße: " + info.getCharHeight() + "\nGewicht: " + info.getCharWeight());
+					+"\nGröße: " + info.getCharHeight() + "\nGewicht: " + info.getCharWeight());
 					break;
 				case 3:
 					String path = "Dein Pfad";
@@ -212,9 +218,10 @@ public class InputScene {
 					}
 					else{
 						alerts.createNewAlert("Bitte alle Punkte ausgeben!", 2);
+						return;
 					}
 					System.out.println("Stärke: " + info.getCharAttributeStrength() + "\n" + "Gewandtheit: " + info.getCharAttributeDexterity()
-										+ "\nIntelligenz: " + info.getCharAttributeIntelligence());
+					+ "\nIntelligenz: " + info.getCharAttributeIntelligence());
 					break;
 				default:
 					break;
@@ -249,7 +256,7 @@ public class InputScene {
 		List<Node> nodes = new ArrayList<>();
 
 		switch (sceneCount) {
-		
+
 		// race / culture
 		case 1:
 			Label labelRace = new Label("Wähle deine Rasse:");
@@ -288,7 +295,7 @@ public class InputScene {
 			nodes.add(cultureMenu);
 			nodes.add(buttonNextStep);
 			break;
-			
+
 			// hair / eye / height
 		case 2:
 			Label labelHair = new Label("Wähle deine Haarfarbe:");
@@ -332,17 +339,17 @@ public class InputScene {
 			Label labelWeight = new Label("Gewicht:");	
 			labelWeight.setLayoutY(90);
 			textFieldHeight = new TextField();
-			
+
 			// filters all non-integer characters
 			UnaryOperator<Change> integerFilter = change -> {
-			    String input = change.getText();
-			    if (input.matches("[0-9]*")) { 
-			        return change;
-			    }
-			    return null;
+				String input = change.getText();
+				if (input.matches("[0-9]*")) { 
+					return change;
+				}
+				return null;
 			};
 			textFieldHeight.setTextFormatter(new TextFormatter<String>(integerFilter));
-			
+
 			textFieldHeight.setPromptText("Deine Größe");
 			textFieldHeight.setLayoutX(140);
 			textFieldHeight.setLayoutY(60);
@@ -374,8 +381,8 @@ public class InputScene {
 			buttonNextStep.setLayoutY(120);
 			nodes.add(buttonNextStep);
 			break;
-			
-		// path / role / profession	
+
+			// path / role / profession	
 		case 3:
 			Label labelPath = new Label("Wähle deinen Pfad");
 			ToggleButton toggleSublime = new ToggleButton("Die Erhabenen");
@@ -398,14 +405,14 @@ public class InputScene {
 			toggleManufacturer.setLayoutX(200);
 			togglePathless.setLayoutY(30);
 			togglePathless.setLayoutX(320);
-			
+
 			Label labelProf = new Label("Wähle deinen Beruf");
 			textProf = new TextField();
 			textProf.setPromptText("Dein Beruf");			
 			labelProf.setLayoutY(60);
 			textProf.setLayoutX(140);
 			textProf.setLayoutY(60);
-			
+
 			nodes.add(labelPath);
 			nodes.add(toggleSublime);
 			nodes.add(toggleErudite);
@@ -416,12 +423,12 @@ public class InputScene {
 			buttonNextStep.setLayoutY(90);
 			nodes.add(buttonNextStep);
 			break;
-			
-		// base stats	
+
+			// base stats	
 		case 4:
 			int[] raceBonus = info.getRaceBonuses(info.getCharRace());
 			availableBonuses = info.getRaceStatsBonus();
-			
+
 			Label labelBase = new Label("Wähle deine Basiswerte:");
 			Label labelStr = new Label("Stärke:");
 			Label labelDex = new Label("Gewandtheit:");
@@ -434,7 +441,7 @@ public class InputScene {
 			labelStr.setLayoutY(30);
 			labelDex.setLayoutY(60);
 			labelInt.setLayoutY(90);			
-			
+
 			curStr = info.getCharAttributeStrength() + raceBonus[0];
 			labelCurStr = new Label(Integer.toString(curStr));
 			curDex = info.getCharAttributeDexterity() + raceBonus[1];
@@ -447,7 +454,7 @@ public class InputScene {
 			labelCurDex.setLayoutY(60);
 			labelCurInt.setLayoutX(85);
 			labelCurInt.setLayoutY(90);
-			
+
 			Button buttonStrPlus = new Button(" + ");
 			buttonStrPlus.setOnAction(new EventHandler<ActionEvent>(){
 				@Override
@@ -538,7 +545,7 @@ public class InputScene {
 					}
 				}				
 			});
-			
+
 			buttonStrPlus.setLayoutX(100);
 			buttonStrPlus.setLayoutY(30);
 			buttonStrMinus.setLayoutX(150);
@@ -551,7 +558,7 @@ public class InputScene {
 			buttonIntPlus.setLayoutY(90);
 			buttonIntMinus.setLayoutX(150);
 			buttonIntMinus.setLayoutY(90);			
-			
+
 			nodes.add(labelBase);
 			nodes.add(labelStr);
 			nodes.add(labelDex);
@@ -568,6 +575,67 @@ public class InputScene {
 			nodes.add(buttonIntPlus);
 			nodes.add(buttonIntMinus);		
 			buttonNextStep.setLayoutY(120); // TODO change value
+			nodes.add(buttonNextStep);
+			break;
+		case 5:
+			adv = info.getCharAdvDis().getKey();
+			if(info.getCharRace().equals("NEHRIM")){
+				adv++;
+			}
+			String path = info.getCharPath();
+			if(path.equals("Die Schaffenden")){
+				adv += 3;
+			}
+			else if(path.equals("Die Belesenen")){
+				adv += 2;
+			}
+			else if(path.equals("Die Erhabenen")){
+				adv++;
+			}
+			dis = info.getCharAdvDis().getValue();
+			
+			Label labelAdv = new Label("Vorteile:");
+			Label labelAdvValue = new Label(Integer.toString(adv));
+			Label labelDis = new Label("Nachteile:");
+			Label labelDisValue = new Label(Integer.toString(dis));
+			labelAdvValue.setLayoutX(60);
+			labelDis.setLayoutY(30);
+			labelDisValue.setLayoutX(60);
+			labelDisValue.setLayoutY(30);			
+			
+			ScrollPane scrollAdv = new ScrollPane();
+			scrollAdv.setLayoutY(60);
+			VBox vBoxAdv = new VBox();
+			scrollAdv.setContent(vBoxAdv);
+			Pair<String, Integer>[] listAdv = info.getAdvantages();
+			ToggleSet<ToggleButton> toggleSet = new ToggleSet<>(adv);
+			for (int i = 0; i < listAdv.length - 1; i++) {
+				System.out.println(listAdv[i]);
+				String name = listAdv[i].getKey();
+				int costs = listAdv[i].getValue();
+				ToggleButton toggleButton = new ToggleButton();
+				toggleButton.setUserData(name);
+				toggleButton.setText(name + " (" + costs + ")");				
+				
+				toggleButton.selectedProperty().addListener((obs, wasChecked, isNowChecked) -> {
+	                if (isNowChecked) {
+	                    toggleSet.addToggle(toggleButton);
+	                    // TODO change label
+	                } else {
+	                    toggleSet.removeToggle(toggleButton);	   
+	                    // TODO change label
+	                }
+	            });
+				// TODO check ToggleSet for "markers"
+				vBoxAdv.getChildren().add(toggleButton);	           
+			}
+			
+			nodes.add(labelAdv);
+			nodes.add(labelAdvValue);
+			nodes.add(labelDis);
+			nodes.add(labelDisValue);
+			nodes.add(scrollAdv);
+			buttonNextStep.setLayoutX(300); // TODO change value
 			nodes.add(buttonNextStep);
 			break;
 		default:

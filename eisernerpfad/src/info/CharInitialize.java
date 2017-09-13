@@ -42,6 +42,11 @@ public class CharInitialize {
 	// bonuses
 	private final int raceStatsBonus = 3;
 	
+	// advantages / dis
+	private final int disadvantages = 3;
+	private final int advantages = disadvantages + 0;
+	private final int numberOfAdv = 29;
+	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 	
@@ -70,6 +75,9 @@ public class CharInitialize {
 		info.setCharAttributeArcaneFever(ARCANE_FEVER_BASE);
 		
 		info.setRaceStatsBonus(raceStatsBonus);
+		
+		info.setCharAdvDis(advantages, disadvantages);
+		info.setNumberOfAdv(30);
 	}
 
 }

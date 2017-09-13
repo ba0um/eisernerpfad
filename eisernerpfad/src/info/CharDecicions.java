@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Pair;
 
 
 public class CharDecicions {	
@@ -280,6 +281,11 @@ public class CharDecicions {
 		return weight;
 	}
 	
+	/**
+	 * Checks whether or not the chosen height is within the race's height range.
+	 * @param heightString
+	 * @return
+	 */
 	public boolean isHeightAllowed(String heightString){
 		boolean isAllowed = false;
 		int height = Integer.parseInt(heightString);

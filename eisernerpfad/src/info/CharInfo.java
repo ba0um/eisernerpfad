@@ -330,6 +330,11 @@ public class CharInfo {
 	 */
 	private int cultureBonuses;
 	
+	/**
+	 * Describes the current total number of available advantages within the game.
+	 */
+	private int numberOfAdv;
+	
 
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -868,10 +873,94 @@ public class CharInfo {
 	}
 
 	/**
-	 * @param charAdvDis the charAdvDis to set
+	 * @param adv - the number of available advantages <br>
+	 * @param dis - the number of available disadvantages
 	 */
-	public void setCharAdvDis(Pair<Integer, Integer> charAdvDis) {
-		this.charAdvDis = charAdvDis;
+	public void setCharAdvDis(int adv, int dis) {		
+		charAdvDis = new Pair<Integer, Integer>(adv, dis);
+	}
+	
+	/**
+	 * @param the number of advantages within the game
+	 */
+	public void setNumberOfAdv(int i) {
+		numberOfAdv = i;		
+	}
+	
+	public int getNumberOfAdv() {
+		return numberOfAdv;		
+	}
+	
+	/**
+	 * Returns an array of pairs which each hold an advantage's name and its value.
+	 * @return
+	 */
+	public Pair<String, Integer>[] getAdvantages(){
+		@SuppressWarnings("unchecked")
+		Pair<String, Integer>[] advantages = (Pair<String, Integer>[]) new Pair[getNumberOfAdv()];
+		
+		Pair<String, Integer> adlig = new Pair<String, Integer>("Adlig", 1);
+		advantages[0] = adlig;
+		Pair<String, Integer> ausdauernd = new Pair<String, Integer>("Ausdauernd", 12);
+		advantages[1] = ausdauernd;
+		Pair<String, Integer> balance = new Pair<String, Integer>("Balance", 1);
+		advantages[2] = balance;
+		Pair<String, Integer> beidhaendig = new Pair<String, Integer>("Beidhändig", 2);
+		advantages[3] = beidhaendig;
+		Pair<String, Integer> besitz = new Pair<String, Integer>("Besonderer Besitz", 2); 
+		advantages[4] = besitz;
+		Pair<String, Integer> daemmerungssicht = new Pair<String, Integer>("Dämmerungssicht", 1);
+		advantages[5] = daemmerungssicht;
+		Pair<String, Integer> eidetisch = new Pair<String, Integer>("Eidetisches Gedächtnis", 3);
+		advantages[6] = eidetisch;
+		Pair<String, Integer> flink = new Pair<String, Integer>("Flink", 1);
+		advantages[7] = flink;
+		Pair<String, Integer> konzentriert = new Pair<String, Integer>("Konzentriert", 12);
+		advantages[8] = konzentriert;
+		Pair<String, Integer> empathie = new Pair<String, Integer>("Empathie (Gabe)", 93); 
+		advantages[9] = empathie;
+		
+		Pair<String, Integer> gefahreninstinkt = new Pair<String, Integer>("Gefahreninstinkt (Gabe)", 92);
+		advantages[10] = gefahreninstinkt;
+		Pair<String, Integer> magiegespuer = new Pair<String, Integer>("Magiegespür (Gabe)", 92);
+		advantages[11] = magiegespuer;
+		Pair<String, Integer> sternlingsinn = new Pair<String, Integer>("Sternlingsinn (Gabe)", 92);
+		advantages[12] = sternlingsinn;
+		Pair<String, Integer> traumdeutung = new Pair<String, Integer>("Traumdeutung / Prophezeiung (Gabe)", 92);
+		advantages[13] = traumdeutung;
+		Pair<String, Integer> tierempathie = new Pair<String, Integer>("Tierempathie (Gabe)", 923); 
+		advantages[14] = tierempathie;
+		Pair<String, Integer> glueck = new Pair<String, Integer>("Glück", 2);
+		advantages[15] = glueck;
+		Pair<String, Integer> gutaussehend = new Pair<String, Integer>("Gut aussehend", 1);
+		advantages[16] = gutaussehend;
+		Pair<String, Integer> gutesgedaechtnis = new Pair<String, Integer>("Gutes Gedächtnis", 12);
+		advantages[17] = gutesgedaechtnis;
+		Pair<String, Integer> hohemagieresistenz = new Pair<String, Integer>("Hohe Magieresistenz", 12);
+		advantages[18] = hohemagieresistenz;
+		Pair<String, Integer> immungift = new Pair<String, Integer>("Immunität gegen Gifte", 23); 
+		advantages[19] = immungift;
+		
+		Pair<String, Integer> immunkrank = new Pair<String, Integer>("Immunität gegen Krankheiten", 23);
+		advantages[20] = immunkrank;
+		Pair<String, Integer> innererkompass = new Pair<String, Integer>("Innerer Kompass", 1);
+		advantages[21] = innererkompass;
+		Pair<String, Integer> schnelleheilung = new Pair<String, Integer>("Schnelle Heilung", 12);
+		advantages[22] = schnelleheilung;
+		Pair<String, Integer> tierfreund = new Pair<String, Integer>("Tierfreund", 1);
+		advantages[23] = tierfreund;
+		Pair<String, Integer> sinnhoeren = new Pair<String, Integer>("Überragender Sinn: Hören", 12); 
+		advantages[24] = sinnhoeren;
+		Pair<String, Integer> sinnsehen = new Pair<String, Integer>("Überragender Sinn: Sehen", 12);
+		advantages[25] = sinnsehen;
+		Pair<String, Integer> sinnriechen = new Pair<String, Integer>("Überragender Sinn: Riechen", 12);
+		advantages[26] = sinnriechen;
+		Pair<String, Integer> sinntasten = new Pair<String, Integer>("Überragender Sinn: Tasten", 12);
+		advantages[27] = sinntasten;
+		Pair<String, Integer> zeitgefuehl = new Pair<String, Integer>("Zeitgefühl", 1);
+		advantages[28] = zeitgefuehl;
+		
+		return advantages;		
 	}
 	
 }

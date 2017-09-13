@@ -39,6 +39,9 @@ public class CharInitialize {
 	private final int MAGIC_RES_BASE = 0;
 	private final int ARCANE_FEVER_BASE = 0;
 	
+	// bonuses
+	private final int raceStatsBonus = 3;
+	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 	
@@ -65,6 +68,8 @@ public class CharInitialize {
 		info.setCharAttributeProtection(PROTECTION_BASE);
 		info.setCharAttributeMagicResistance(MAGIC_RES_BASE);
 		info.setCharAttributeArcaneFever(ARCANE_FEVER_BASE);
+		
+		info.setRaceStatsBonus(raceStatsBonus);
 	}
 
 }

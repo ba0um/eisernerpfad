@@ -54,8 +54,12 @@ public class InputScene {
 	private ToggleGroup groupPaths;
 	private TextField textProf;
 	private Label labelCurStr;
+	private int curStr;
 	private Label labelCurDex;
-	private Label labelCurInt; 
+	private int curDex;
+	private Label labelCurInt;
+	private int curInt;
+	private int availableBonuses;
 	
 
 	/**
@@ -196,6 +200,22 @@ public class InputScene {
 						return;
 					}
 					System.out.println("Pfad: " + info.getCharPath() + "\n" + "Beruf: " + info.getCharProfession());
+					break;
+				case 4:
+					int str = curStr;
+					int dex = curDex;
+					int intell = curInt;
+					if(availableBonuses == 0){
+						info.setCharAttributeStrength(str);
+						info.setCharAttributeDexterity(dex);
+						info.setCharAttributeIntelligence(intell);
+					}
+					else{
+						alerts.createNewAlert("Bitte alle Punkte ausgeben!", 2);
+					}
+					System.out.println("Stärke: " + info.getCharAttributeStrength() + "\n" + "Gewandtheit: " + info.getCharAttributeDexterity()
+										+ "\nIntelligenz: " + info.getCharAttributeIntelligence());
+					break;
 				default:
 					break;
 				}
@@ -377,7 +397,7 @@ public class InputScene {
 			toggleManufacturer.setLayoutY(30);
 			toggleManufacturer.setLayoutX(200);
 			togglePathless.setLayoutY(30);
-			togglePathless.setLayoutX(300);
+			togglePathless.setLayoutX(320);
 			
 			Label labelProf = new Label("Wähle deinen Beruf");
 			textProf = new TextField();
@@ -399,39 +419,126 @@ public class InputScene {
 			
 		// base stats	
 		case 4:
+			int[] raceBonus = info.getRaceBonuses(info.getCharRace());
+			availableBonuses = info.getRaceStatsBonus();
+			
 			Label labelBase = new Label("Wähle deine Basiswerte:");
 			Label labelStr = new Label("Stärke:");
 			Label labelDex = new Label("Gewandtheit:");
 			Label labelInt = new Label("Intelligenz:");
+			Label labelBonus = new Label("Punkte übrig:");
+			Label labelBonusValue = new Label(Integer.toString(availableBonuses));
+			labelBonus.setLayoutX(250);
+			labelBonusValue.setLayoutX(300);
+			labelBonusValue.setLayoutY(20);
 			labelStr.setLayoutY(30);
 			labelDex.setLayoutY(60);
-			labelInt.setLayoutY(90);
-			labelCurStr = new Label();
-			labelCurDex = new Label();
-			labelCurInt = new Label();
-			labelCurStr.setText(Integer.toString(info.getCharAttributeStrength()));
-			labelCurDex.setText(Integer.toString(info.getCharAttributeDexterity()));
-			labelCurInt.setText(Integer.toString(info.getCharAttributeIntelligence()));
-			labelCurStr.setLayoutX(50);
+			labelInt.setLayoutY(90);			
+			
+			curStr = info.getCharAttributeStrength() + raceBonus[0];
+			labelCurStr = new Label(Integer.toString(curStr));
+			curDex = info.getCharAttributeDexterity() + raceBonus[1];
+			labelCurDex = new Label(Integer.toString(curDex));
+			curInt = info.getCharAttributeIntelligence() + raceBonus[2];
+			labelCurInt = new Label(Integer.toString(curInt));
+			labelCurStr.setLayoutX(85);
 			labelCurStr.setLayoutY(30);
-			labelCurDex.setLayoutX(50);
+			labelCurDex.setLayoutX(85);
 			labelCurDex.setLayoutY(60);
-			labelCurInt.setLayoutX(50);
+			labelCurInt.setLayoutX(85);
 			labelCurInt.setLayoutY(90);
 			
 			Button buttonStrPlus = new Button(" + ");
 			buttonStrPlus.setOnAction(new EventHandler<ActionEvent>(){
 				@Override
 				public void handle(ActionEvent arg0) {
-					int newBase = decisions.changeBaseStat("Str", true);
-					labelCurStr.setText(Integer.toString(newBase));
+					if(availableBonuses > 0){
+						curStr++;
+						labelCurStr.setText(Integer.toString(curStr));	
+						availableBonuses--;
+						labelBonusValue.setText(Integer.toString(availableBonuses));
+					}
+					else{
+						alerts.createNewAlert("Alle Boni aufgebraucht", 2);
+					}
 				}				
 			});	
 			Button buttonStrMinus = new Button(" - ");
+			buttonStrMinus.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent arg0) {
+					if(curStr > info.getCharAttributeStrength() + raceBonus[0]){
+						curStr--;
+						labelCurStr.setText(Integer.toString(curStr));	
+						availableBonuses++;
+						labelBonusValue.setText(Integer.toString(availableBonuses));
+					}
+					else{
+						alerts.createNewAlert("Nicht unter den Startwert", 2);
+					}
+				}				
+			});
 			Button buttonDexPlus = new Button(" + ");
+			buttonDexPlus.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent arg0) {
+					if(availableBonuses > 0){
+						curDex++;
+						labelCurDex.setText(Integer.toString(curDex));	
+						availableBonuses--;
+						labelBonusValue.setText(Integer.toString(availableBonuses));
+					}
+					else{
+						alerts.createNewAlert("Alle Boni aufgebraucht", 2);
+					}
+				}				
+			});
 			Button buttonDexMinus = new Button(" - ");
+			buttonDexMinus.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent arg0) {
+					if(curDex > info.getCharAttributeDexterity() + raceBonus[1]){
+						curDex--;
+						labelCurDex.setText(Integer.toString(curDex));	
+						availableBonuses++;
+						labelBonusValue.setText(Integer.toString(availableBonuses));
+					}
+					else{
+						alerts.createNewAlert("Nicht unter den Startwert", 2);
+					}
+				}				
+			});
 			Button buttonIntPlus = new Button(" + ");
+			buttonIntPlus.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent arg0) {
+					if(availableBonuses > 0){
+						curInt++;
+						labelCurInt.setText(Integer.toString(curInt));	
+						availableBonuses--;
+						labelBonusValue.setText(Integer.toString(availableBonuses));
+					}
+					else{
+						alerts.createNewAlert("Alle Boni aufgebraucht", 2);
+					}
+				}				
+			});
 			Button buttonIntMinus = new Button(" - ");
+			buttonIntMinus.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent arg0) {
+					if(curInt > info.getCharAttributeIntelligence() + raceBonus[2]){
+						curInt--;
+						labelCurInt.setText(Integer.toString(curInt));	
+						availableBonuses++;
+						labelBonusValue.setText(Integer.toString(availableBonuses));
+					}
+					else{
+						alerts.createNewAlert("Nicht unter den Startwert", 2);
+					}
+				}				
+			});
+			
 			buttonStrPlus.setLayoutX(100);
 			buttonStrPlus.setLayoutY(30);
 			buttonStrMinus.setLayoutX(150);
@@ -449,12 +556,17 @@ public class InputScene {
 			nodes.add(labelStr);
 			nodes.add(labelDex);
 			nodes.add(labelInt);
+			nodes.add(labelBonus);
+			nodes.add(labelBonusValue);
+			nodes.add(labelCurStr);
+			nodes.add(labelCurDex);
+			nodes.add(labelCurInt);
 			nodes.add(buttonStrPlus);
 			nodes.add(buttonStrMinus);
 			nodes.add(buttonDexPlus);
 			nodes.add(buttonDexMinus);
 			nodes.add(buttonIntPlus);
-			nodes.add(buttonIntMinus);			
+			nodes.add(buttonIntMinus);		
 			buttonNextStep.setLayoutY(120); // TODO change value
 			nodes.add(buttonNextStep);
 			break;

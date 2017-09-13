@@ -303,11 +303,5 @@ public class CharDecicions {
 			break;
 		}		
 		return isAllowed;
-	}
-
-	public int changeBaseStat(String string, boolean b) {
-		int newBase = 0;
-		
-		return newBase;
-	}
+	}	
 }

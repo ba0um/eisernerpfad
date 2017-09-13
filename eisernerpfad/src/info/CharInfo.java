@@ -1,5 +1,7 @@
 package info;
 
+import javafx.util.Pair;
+
 public class CharInfo {
 	
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -284,6 +286,49 @@ public class CharInfo {
 	 * abbr: <b>AF</b>
 	 */
 	private double charAttributeArcaneFever;
+	
+	/**
+	 * The current number of advantages (key) and disadvantages (value).
+	 */
+	private Pair<Integer, Integer> charAdvDis;
+	
+	
+	/**
+	 * The bonuses a character gets from its chosen race. <br>
+	 * {str, dex, int, lp, ap, mp, mr, <br>
+	 * talents: <br>
+	 * 925 = 2x 5 intBase <br>
+	 * 952 = 5x 2 base <br>
+	 * 9101 = 10x 1 base <br>
+	 * <br>
+	 * 8101 = 10x 1 special <br>
+	 * 8151 = 15x 1 special <br>
+	 * 8201 = 20x 1 intSpecial <br>
+	 * 8251 = 25x 1 special <br>
+	 * 81011 = 10x 1 bodySpecial <br>
+	 * 81512 = 15x 1 socialSpecial <br>
+	 * 81513 = 15x 1 knowledgeSpecial <br>
+	 * 81514 = 15x 1 natureSpecial <br>
+	 * }
+	 */
+	private int[] raceBonuses;
+	
+	/**
+	 * The number of stat points the player can distribute at the creation of the char.
+	 */
+	private int raceStatsBonus;
+	
+	/**
+	 * The bonus a character gets from its chosen culture. <br>
+	 * all talents <br>
+	 * 952 = 5x 2 base <br> 
+	 * 8101 = 10x 1 special <br>
+	 * 81511 = 10x 1 bodySpecial <br>
+	 * 81512 = 15x 1 socialSpecial <br>
+	 * 81513 = 15x 1 knowledgeSpecial <br>
+	 * 81514 = 15x 1 natureSpecial
+	 */
+	private int cultureBonuses;
 	
 
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -713,6 +758,120 @@ public class CharInfo {
 	 */
 	public void setCharAttributeArcaneFever(double charAttributeArcaneFever) {
 		this.charAttributeArcaneFever = charAttributeArcaneFever;
+	}
+
+	/**
+	 * @param race - the characters race as string
+	 * @return the {@link CharInfo#raceBonuses}
+	 */
+	public int[] getRaceBonuses(String race) {
+		switch (race) {
+		case "HALF_AETERNA":
+			int[] aeternaBonuses = {-1, 0, 1, 0, 0, 18, 10, 925, 8201, 0};
+			raceBonuses = aeternaBonuses;
+			break;
+		case "NEHRIM":
+			int[] nehrimBonuses = {1, 0, 0, 12, 0, 0, 0, 952, 81011, 8151};
+			raceBonuses = nehrimBonuses;
+			break;
+		case "ARAZEAL":
+			int[] arazealBonuses = {1, 0, -1, 12, 6, 0, 4, 9101, 8251, 0};
+			raceBonuses = arazealBonuses;
+			break;
+		case "KILE":
+			int[] kileBonuses = {0, 0, 1, 0, 6, 0, 0, 952, 81512, 8101};
+			raceBonuses = kileBonuses;
+			break;
+		case "QYRA":
+			int[] qyraBonuses = {0, -1, 1, 10, 0, 8, 10, 952, 81513, 8101};
+			raceBonuses = qyraBonuses;
+			break;			
+		case "SKARAGG":
+			int[] skaraggBonuses = {0, 1, -1, 8, 0, 10, 4, 952, 81514, 8101};
+			raceBonuses = skaraggBonuses;
+			break;		
+		default:
+			break;
+		}		
+		return raceBonuses;
+	}
+
+	/**
+	 * @param raceBonuses the raceBonuses to set
+	 */
+	public void setRaceBonuses(int[] raceBonuses) {
+		this.raceBonuses = raceBonuses;
+	}
+
+	/**
+	 * @return the raceStatsBonus
+	 */
+	public int getRaceStatsBonus() {
+		return raceStatsBonus;
+	}
+
+	/**
+	 * @param raceStatsBonus the raceStatsBonus to set
+	 */
+	public void setRaceStatsBonus(int raceStatsBonus) {
+		this.raceStatsBonus = raceStatsBonus;
+	}
+
+	/**
+	 * @param the characters culture as a string
+	 * @return the {@link #cultureBonuses}
+	 */
+	public int getCultureBonuses(String culture) {
+		int i = 0;
+		switch (culture) {
+		case "NEHRIM_SOUTH":
+			i = 81511;
+			break;
+		case "ARAZEAL_FREE":
+			i = 952;
+			break;
+		case "KILE_UPPER":
+			i = 81512;
+			break;
+		case "QYRA_FARM":
+			i = 81513;
+			break;
+		case "SKARAGG_BIG":
+			i = 81514;
+			break;
+		case "NEHRIM_MIDDLE":
+		case "ARAZEAL_CIVILIZED":
+		case "KILE_FOLKS":
+		case "QYRA_FOLKS":
+		case "SKARAGG_SMALL":
+			i = 8101;
+			break;
+		default:
+			break;
+		}
+		cultureBonuses = i;
+		return cultureBonuses;
+	}
+
+	/**
+	 * @param cultureBonuses the cultureBonuses to set
+	 */
+	public void setCultureBonuses(int cultureBonuses) {
+		this.cultureBonuses = cultureBonuses;
+	}
+
+	/**
+	 * @return the charAdvDis
+	 */
+	public Pair<Integer, Integer> getCharAdvDis() {
+		return charAdvDis;
+	}
+
+	/**
+	 * @param charAdvDis the charAdvDis to set
+	 */
+	public void setCharAdvDis(Pair<Integer, Integer> charAdvDis) {
+		this.charAdvDis = charAdvDis;
 	}
 	
 }

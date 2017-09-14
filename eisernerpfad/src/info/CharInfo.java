@@ -335,6 +335,11 @@ public class CharInfo {
 	 */
 	private int numberOfAdv;
 	
+	/**
+	 * Describes the current total number of available disadvantages within the game.
+	 */
+	private int numberOfDis;
+	
 
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -891,6 +896,17 @@ public class CharInfo {
 		return numberOfAdv;		
 	}
 	
+	public int getNumberOfDis() {
+		return numberOfDis;
+	}
+	
+	/**
+	 * @param numberOfDis - the number of disadvantages within the game
+	 */
+	public void setNumberOfDis(int numberOfDis) {
+		this.numberOfDis = numberOfDis;
+	}	
+	
 	/**
 	 * Returns an array of pairs which each hold an advantage's name and its value.
 	 * @return
@@ -917,18 +933,17 @@ public class CharInfo {
 		advantages[7] = flink;
 		Pair<String, Integer> konzentriert = new Pair<String, Integer>("Konzentriert", 12);
 		advantages[8] = konzentriert;
-		Pair<String, Integer> empathie = new Pair<String, Integer>("Empathie (Gabe)", 93); 
-		advantages[9] = empathie;
-		
-		Pair<String, Integer> gefahreninstinkt = new Pair<String, Integer>("Gefahreninstinkt (Gabe)", 92);
+		Pair<String, Integer> empathie = new Pair<String, Integer>("Empathie (Gabe)", 39); 
+		advantages[9] = empathie;		
+		Pair<String, Integer> gefahreninstinkt = new Pair<String, Integer>("Gefahreninstinkt (Gabe)", 29);
 		advantages[10] = gefahreninstinkt;
-		Pair<String, Integer> magiegespuer = new Pair<String, Integer>("Magiegespür (Gabe)", 92);
+		Pair<String, Integer> magiegespuer = new Pair<String, Integer>("Magiegespür (Gabe)", 29);
 		advantages[11] = magiegespuer;
-		Pair<String, Integer> sternlingsinn = new Pair<String, Integer>("Sternlingsinn (Gabe)", 92);
+		Pair<String, Integer> sternlingsinn = new Pair<String, Integer>("Sternlingsinn (Gabe)", 29);
 		advantages[12] = sternlingsinn;
-		Pair<String, Integer> traumdeutung = new Pair<String, Integer>("Traumdeutung / Prophezeiung (Gabe)", 92);
+		Pair<String, Integer> traumdeutung = new Pair<String, Integer>("Traumdeutung / Prophezeiung (Gabe)", 29);
 		advantages[13] = traumdeutung;
-		Pair<String, Integer> tierempathie = new Pair<String, Integer>("Tierempathie (Gabe)", 923); 
+		Pair<String, Integer> tierempathie = new Pair<String, Integer>("Tierempathie (Gabe)", 239); 
 		advantages[14] = tierempathie;
 		Pair<String, Integer> glueck = new Pair<String, Integer>("Glück", 2);
 		advantages[15] = glueck;
@@ -939,8 +954,7 @@ public class CharInfo {
 		Pair<String, Integer> hohemagieresistenz = new Pair<String, Integer>("Hohe Magieresistenz", 12);
 		advantages[18] = hohemagieresistenz;
 		Pair<String, Integer> immungift = new Pair<String, Integer>("Immunität gegen Gifte", 23); 
-		advantages[19] = immungift;
-		
+		advantages[19] = immungift;		
 		Pair<String, Integer> immunkrank = new Pair<String, Integer>("Immunität gegen Krankheiten", 23);
 		advantages[20] = immunkrank;
 		Pair<String, Integer> innererkompass = new Pair<String, Integer>("Innerer Kompass", 1);
@@ -961,6 +975,84 @@ public class CharInfo {
 		advantages[28] = zeitgefuehl;
 		
 		return advantages;		
+	}
+
+	public Pair<String, Integer>[] getDisadvantages() {
+		@SuppressWarnings("unchecked")
+		Pair<String, Integer>[] disadvantages = (Pair<String, Integer>[]) new Pair[getNumberOfDis()];
+		
+		Pair<String, Integer> aberglaube = new Pair<String, Integer>("Aberglaube", 12);
+		disadvantages[0] = aberglaube;
+		Pair<String, Integer> angst = new Pair<String, Integer>("Angst", 123);
+		disadvantages[1] = angst;
+		Pair<String, Integer> arroganz = new Pair<String, Integer>("Arroganz", 12);
+		disadvantages[2] = arroganz;
+		Pair<String, Integer> bruenstig = new Pair<String, Integer>("Brünstig", 12);
+		disadvantages[3] = bruenstig;
+		Pair<String, Integer> einarmig = new Pair<String, Integer>("Einarmig", 23);
+		disadvantages[4] = einarmig;		
+		Pair<String, Integer> einaeugig = new Pair<String, Integer>("Einäugig", 1);
+		disadvantages[5] = einaeugig;
+		Pair<String, Integer> einbeinig = new Pair<String, Integer>("Einbeinig", 31);
+		disadvantages[6] = einbeinig;
+		Pair<String, Integer> sinnhoeren = new Pair<String, Integer>("Eingeschränkter Sinn: Hören", 12);
+		disadvantages[7] = sinnhoeren;
+		Pair<String, Integer> sinnsehen = new Pair<String, Integer>("Eingeschränkter Sinn: Sehen", 12);
+		disadvantages[8] = sinnsehen;
+		Pair<String, Integer> sinnriechen = new Pair<String, Integer>("Eingeschränkter Sinn: Riechen", 12);
+		disadvantages[9] = sinnriechen;
+		Pair<String, Integer> sinntasten = new Pair<String, Integer>("Eingeschränkter Sinn: Tasten", 12);
+		disadvantages[10] = sinntasten;
+		Pair<String, Integer> eitelkeit = new Pair<String, Integer>("Eitelkeit", 12);
+		disadvantages[11] = eitelkeit;
+		Pair<String, Integer> fettleibigkeit = new Pair<String, Integer>("Fettleibig", 2);
+		disadvantages[12] = fettleibigkeit;
+		Pair<String, Integer> geiz = new Pair<String, Integer>("Geiz", 12);
+		disadvantages[13] = geiz;
+		Pair<String, Integer> giftanfaellig = new Pair<String, Integer>("Gitanfällig", 1);
+		disadvantages[14] = giftanfaellig;		
+		Pair<String, Integer> goldgier = new Pair<String, Integer>("Goldgier", 12);
+		disadvantages[15] = goldgier;
+		Pair<String, Integer> impulsiv = new Pair<String, Integer>("Impulsiv", 1);
+		disadvantages[16] = impulsiv;
+		Pair<String, Integer> jaehzorn = new Pair<String, Integer>("Jähzorn", 12);
+		disadvantages[17] = jaehzorn;
+		Pair<String, Integer> kleinwuechsig = new Pair<String, Integer>("Kleinwüchsig", 1);
+		disadvantages[18] = kleinwuechsig;
+		Pair<String, Integer> krankheitsanfaellig = new Pair<String, Integer>("Krankheitsanfällig", 1);
+		disadvantages[19] = krankheitsanfaellig;		
+		Pair<String, Integer> lahm = new Pair<String, Integer>("Lahm", 2);
+		disadvantages[20] = lahm;
+		Pair<String, Integer> leichterschlaf = new Pair<String, Integer>("Leichter Schlaf", 1);
+		disadvantages[21] = leichterschlaf;
+		Pair<String, Integer> neugier = new Pair<String, Integer>("Neugier", 12);
+		disadvantages[22] = neugier;
+		Pair<String, Integer> pech = new Pair<String, Integer>("Pech", 2);
+		disadvantages[23] = pech;
+		Pair<String, Integer> prinzipientreue = new Pair<String, Integer>("Prinzipientreue", 123);
+		disadvantages[24] = prinzipientreue;
+		Pair<String, Integer> schlechteRegMana = new Pair<String, Integer>("Schlechte Regeneration: Mana", 12);
+		disadvantages[25] = schlechteRegMana;
+		Pair<String, Integer> schlechteRegLeben = new Pair<String, Integer>("Schlechte Regeneration: Leben", 12);
+		disadvantages[26] = schlechteRegLeben;
+		Pair<String, Integer> schlechteRegAusdauer = new Pair<String, Integer>("Schlechte Regeneration: Ausdauer", 12);
+		disadvantages[27] = schlechteRegAusdauer;
+		Pair<String, Integer> sucht = new Pair<String, Integer>("Sucht", 12);
+		disadvantages[28] = sucht;		
+		Pair<String, Integer> tollpatsch = new Pair<String, Integer>("Tollpatsch", 2);
+		disadvantages[29] = tollpatsch;
+		Pair<String, Integer> unansehnich = new Pair<String, Integer>("Unansehnich", 1);
+		disadvantages[30] = unansehnich;
+		Pair<String, Integer> unstet = new Pair<String, Integer>("Unstet", 3);
+		disadvantages[31] = unstet;
+		Pair<String, Integer> vergesslichkeit = new Pair<String, Integer>("Vergesslichkeit", 1);
+		disadvantages[32] = vergesslichkeit;
+		Pair<String, Integer> verwoehnt = new Pair<String, Integer>("Verwöhnt", 12);
+		disadvantages[33] = verwoehnt;
+		Pair<String, Integer> wildmagier = new Pair<String, Integer>("Wildmagier", 2);
+		disadvantages[34] = wildmagier;
+		
+		return disadvantages;
 	}
 	
 }

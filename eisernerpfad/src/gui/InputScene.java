@@ -66,7 +66,9 @@ public class InputScene {
 	private int availableBonuses;
 	private int adv;
 	private int dis;
-
+	private int costs;
+	private ArrayList<String> listChosenAdv;
+	private ArrayList<String> listChosenDis;
 
 	/**
 	 * Number of input scenes: <br>
@@ -74,6 +76,7 @@ public class InputScene {
 	 * 1 = race/culture <br>
 	 */
 	private int sceneCount = 0;
+
 
 	public Scene createInputScene(){
 
@@ -222,6 +225,8 @@ public class InputScene {
 					}
 					System.out.println("Stärke: " + info.getCharAttributeStrength() + "\n" + "Gewandtheit: " + info.getCharAttributeDexterity()
 					+ "\nIntelligenz: " + info.getCharAttributeIntelligence());
+					break;
+				case 5:					
 					break;
 				default:
 					break;
@@ -593,49 +598,105 @@ public class InputScene {
 				adv++;
 			}
 			dis = info.getCharAdvDis().getValue();
-			
+
 			Label labelAdv = new Label("Vorteile:");
 			Label labelAdvValue = new Label(Integer.toString(adv));
 			Label labelDis = new Label("Nachteile:");
 			Label labelDisValue = new Label(Integer.toString(dis));
 			labelAdvValue.setLayoutX(60);
-			labelDis.setLayoutY(30);
-			labelDisValue.setLayoutX(60);
-			labelDisValue.setLayoutY(30);			
-			
+			labelDis.setLayoutX(400);
+			labelDisValue.setLayoutX(460);		
+
 			ScrollPane scrollAdv = new ScrollPane();
 			scrollAdv.setLayoutY(60);
+			scrollAdv.setMaxHeight(500);
+			scrollAdv.setMinWidth(290);
 			VBox vBoxAdv = new VBox();
 			scrollAdv.setContent(vBoxAdv);
 			Pair<String, Integer>[] listAdv = info.getAdvantages();
 			ToggleSet<ToggleButton> toggleSet = new ToggleSet<>(adv);
-			for (int i = 0; i < listAdv.length - 1; i++) {
-				System.out.println(listAdv[i]);
+			for (int i = 0; i < listAdv.length; i++){
 				String name = listAdv[i].getKey();
-				int costs = listAdv[i].getValue();
+				costs = listAdv[i].getValue();
+				while (costs > 9) {
+					costs = costs / 10;
+				}				
+				ToggleButton toggleButton = new ToggleButton();
+				toggleButton.setText(name + " (" + costs + ")");				
+
+				toggleButton.selectedProperty().addListener((obs, wasChecked, isNowChecked) -> {
+					if (isNowChecked) {
+						toggleSet.addToggle(toggleButton);
+						toggleButton.setUserData(name);
+						adv -= costs;                  
+					} else {
+						toggleSet.removeToggle(toggleButton);
+						toggleButton.setUserData(0);
+						adv += costs;
+					}
+					labelAdvValue.setText(Integer.toString(adv));
+					listChosenAdv = new ArrayList<String>();
+					for (Node n: vBoxAdv.getChildren()) {
+						if(n.getUserData() instanceof String) {
+							listChosenAdv.add((String) n.getUserData());
+						}
+					}
+					System.out.println("Vorteile: " + listChosenAdv);
+				});
+				vBoxAdv.getChildren().add(toggleButton);
+			}
+
+			ScrollPane scrollDis = new ScrollPane();
+			scrollDis.setLayoutY(60);
+			scrollDis.setLayoutX(400);
+			scrollDis.setMaxHeight(500);
+			scrollDis.setMinWidth(290);
+			VBox vBoxDis = new VBox();
+			scrollDis.setContent(vBoxDis);
+			Pair<String, Integer>[] listDis = info.getDisadvantages();
+			ToggleSet<ToggleButton> toggleSetDis = new ToggleSet<>(dis);
+			for (int i = 0; i < listDis.length; i++){
+				String name = listDis[i].getKey();
+				costs = listDis[i].getValue();
+				while (costs > 9) {
+					if(i == 0) {
+						System.out.println(costs); // TODO costs is, correctly so, 12 here
+					}
+					costs = costs / 10;
+				}	
+
+				if(i == 0) {
+					System.out.println(costs); // TODO costs is, correctly so, 1 here
+				}
+				
 				ToggleButton toggleButton = new ToggleButton();
 				toggleButton.setUserData(name);
-				toggleButton.setText(name + " (" + costs + ")");				
-				
+				toggleButton.setText(name + " (" + costs + ")"); // TODO costs is, correctly so, still 1		
+
 				toggleButton.selectedProperty().addListener((obs, wasChecked, isNowChecked) -> {
-	                if (isNowChecked) {
-	                    toggleSet.addToggle(toggleButton);
-	                    // TODO change label
-	                } else {
-	                    toggleSet.removeToggle(toggleButton);	   
-	                    // TODO change label
-	                }
-	            });
-				// TODO check ToggleSet for "markers"
-				vBoxAdv.getChildren().add(toggleButton);	           
+
+					if(name.equals("Aberglaube")) {
+						System.out.println(costs); // TODO why is costs here 2?
+					}
+					if (isNowChecked) {
+						toggleSetDis.addToggle(toggleButton);
+						System.out.println(dis + " " + costs);
+						dis -= costs;	             
+					} else {
+						toggleSetDis.removeToggle(toggleButton);
+						dis += costs;
+					}
+					labelDisValue.setText(Integer.toString(dis));
+				});
+				vBoxDis.getChildren().add(toggleButton);	           
 			}
-			
 			nodes.add(labelAdv);
 			nodes.add(labelAdvValue);
 			nodes.add(labelDis);
 			nodes.add(labelDisValue);
 			nodes.add(scrollAdv);
-			buttonNextStep.setLayoutX(300); // TODO change value
+			nodes.add(scrollDis);
+			buttonNextStep.setLayoutX(320);
 			nodes.add(buttonNextStep);
 			break;
 		default:

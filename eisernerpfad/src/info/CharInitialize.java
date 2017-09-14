@@ -46,6 +46,7 @@ public class CharInitialize {
 	private final int disadvantages = 3;
 	private final int advantages = disadvantages + 0;
 	private final int numberOfAdv = 29;
+	private final int numberOfDis = 35;
 	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
@@ -77,7 +78,8 @@ public class CharInitialize {
 		info.setRaceStatsBonus(raceStatsBonus);
 		
 		info.setCharAdvDis(advantages, disadvantages);
-		info.setNumberOfAdv(30);
+		info.setNumberOfAdv(numberOfAdv);
+		info.setNumberOfDis(numberOfDis);
 	}
 
 }

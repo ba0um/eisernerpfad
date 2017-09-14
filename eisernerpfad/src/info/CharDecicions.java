@@ -1,9 +1,14 @@
 package info;
 
+import java.util.ArrayList;
 import java.util.Random;
+
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
 
@@ -309,5 +314,5 @@ public class CharDecicions {
 			break;
 		}		
 		return isAllowed;
-	}	
+	}
 }

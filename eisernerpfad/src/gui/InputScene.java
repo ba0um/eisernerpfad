@@ -70,6 +70,7 @@ public class InputScene {
 	private int costsDis;
 	private ArrayList<Integer> listChosenAdv;
 	private ArrayList<Integer> listChosenDis;
+	private boolean isAGiftSelected;
 
 	/**
 	 * Number of input scenes: <br>
@@ -229,8 +230,8 @@ public class InputScene {
 					break;
 				case 5:
 					ArrayList<String> selectedAdv = new ArrayList<>();
-					ArrayList<String> selectedDis = new ArrayList<>();
-					if(adv-dis == 0){
+					ArrayList<String> selectedDis = new ArrayList<>();					
+					if(adv-dis == 0 && dis >= 0){
 						for(Integer i: listChosenAdv){
 							selectedAdv.add(info.getAdvantages()[i].getKey());
 						}
@@ -239,8 +240,8 @@ public class InputScene {
 						}
 					}
 					else{
-						alerts.createNewAlert("Du hast noch Vorteile übrig", 2);
-						return;
+						alerts.createNewAlert("Du hast noch Vorteile übrig, oder zu viele Nachteile ausgewählt. Bitte beginne von vorne.", 2);
+						sceneCount = 4;
 					}
 					System.out.println("Gewählte Vorteile: " + selectedAdv + "\nGewählte Nachteile: " + selectedDis);
 					break;
@@ -598,6 +599,10 @@ public class InputScene {
 			buttonNextStep.setLayoutY(120);
 			nodes.add(buttonNextStep);
 			break;
+		// adv / dis
+		// TODO: Stufe übergeben (für die Ausgabe)
+		// TODO: Gaben abwählen fixen
+		// TODO: allg. abwählen fixen, so dass die Kosten stimmen
 		case 5:
 			adv = info.getCharAdvDis().getKey();
 			if(info.getCharCulture().equals("NEHRIM_FREE")){
@@ -614,7 +619,7 @@ public class InputScene {
 				adv++;
 			}
 			dis = info.getCharAdvDis().getValue();
-
+			
 			Label labelAdv = new Label("Vorteile:");
 			Label labelAdvValue = new Label(Integer.toString(adv));
 			Label labelDis = new Label("Nachteile:");
@@ -638,18 +643,73 @@ public class InputScene {
 					costsAdv = costsAdv / 10;
 				}				
 				ToggleButton toggleButton = new ToggleButton();
-				toggleButton.setText(name + " (" + costsAdv + ")");				
+				toggleButton.setText(name + " (" + costsAdv + ")");			
 				toggleButton.setUserData(i);
 				
 				toggleButton.selectedProperty().addListener((obs, wasChecked, isNowChecked) -> {
 					int cash = listAdv[(int) toggleButton.getUserData()].getValue();
-					while (cash > 9) {
-						cash = cash / 10;
-					}	
 					if (isNowChecked) {
+						if(cash > 3){
+							int getCash = alerts.createNewAlert(cash);
+							switch (getCash) {
+							case 0:
+								return;
+							case 4:
+								cash = 3;
+								adv++;
+							case 29:
+								if(isAGiftSelected){
+									alerts.createNewAlert("Nur eine Gabe erlaubt!", 2);
+									adv -= 29;
+									toggleButton.setSelected(false);
+									return;
+								}
+								else{
+									isAGiftSelected = true;
+									cash = 2;
+									break;
+								}
+							case 39:
+								if(isAGiftSelected){
+									alerts.createNewAlert("Nur eine Gabe erlaubt!", 2);
+									adv -= 39;
+									toggleButton.setSelected(false);
+									return;
+								}
+								else{
+									isAGiftSelected = true;
+									cash = 3;
+									break;
+								}
+							default:
+								cash = getCash;
+								break;
+							}
+						}
 						toggleSetAdv.addToggle(toggleButton);
 						adv -= cash;                  
 					} else {
+						if(cash > 3){
+							int getCash = alerts.createNewAlert(cash);
+							switch (getCash) {
+							case 0:
+								return;
+							case 4:
+								cash = 3;
+								adv++;
+							case 29:
+								cash = 2;
+								isAGiftSelected = false;
+								break;
+							case 39:
+								cash = 3;
+								isAGiftSelected = false;
+								break;
+							default:
+								cash = getCash;
+								break;
+							}
+						}
 						toggleSetAdv.removeToggle(toggleButton);
 						adv += cash;
 					}
@@ -686,13 +746,36 @@ public class InputScene {
 
 				toggleButton.selectedProperty().addListener((obs, wasChecked, isNowChecked) -> {
 					int cash = listDis[(int) toggleButton.getUserData()].getValue();
-					while (cash > 9) {
-						cash = cash / 10;
-					}	
 					if (isNowChecked) {
+						if(cash > 3){
+							int getCash = alerts.createNewAlert(cash);
+							switch (getCash) {
+							case 0:
+								return;
+							case 4:
+								cash = 3;
+								adv++;							
+							default:
+								cash = getCash;
+								break;
+							}
+						}
 						toggleSetDis.addToggle(toggleButton);
 						dis -= cash;	             
 					} else {
+						if(cash > 3){
+							int getCash = alerts.createNewAlert(cash);
+							switch (getCash) {
+							case 0:
+								return;
+							case 4:
+								cash = 3;
+								adv++;							
+							default:
+								cash = getCash;
+								break;
+							}
+						}
 						toggleSetDis.removeToggle(toggleButton);
 						dis += cash;
 					}
@@ -710,6 +793,7 @@ public class InputScene {
 			nodes.add(labelDisValue);
 			nodes.add(scrollAdv);
 			nodes.add(scrollDis);
+			
 			buttonNextStep.setLayoutX(320);
 			nodes.add(buttonNextStep);
 			break;

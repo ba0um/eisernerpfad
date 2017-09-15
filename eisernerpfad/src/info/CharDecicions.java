@@ -1,18 +1,12 @@
 package info;
 
-import java.util.ArrayList;
+
 import java.util.Random;
-
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.layout.VBox;
-import javafx.util.Pair;
 
 
-public class CharDecicions {	
+public class CharDecicions {		
 	
 	private NewCharacter newChar;
 	private CharInfo info;
@@ -22,7 +16,7 @@ public class CharDecicions {
 		info = newChar.getInfo();
 	}
 	
-	
+	private static Boolean isConfirmed;
 	
 	private ObservableList<String> cultureList;
 	private ObservableList<String> hairList;
@@ -314,5 +308,9 @@ public class CharDecicions {
 			break;
 		}		
 		return isAllowed;
+	}
+
+	public static void setIsConfirmed(Boolean confirmed) {
+		isConfirmed = confirmed;
 	}
 }

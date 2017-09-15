@@ -67,18 +67,17 @@ public class Alerts extends Application {
 			break;
 
 		case 4: 
-			// TODO is this case in use? if yes -> make it work by changing the infoexpert locs
 			newAlert.setAlertType(AlertType.CONFIRMATION);
 			newAlert.setHeaderText("Sicher?");
 			// makes sure, isConfirmed is actually null (maybe redundant)
-			// InformationExpert.setIsConfirmed(null);
+			info.CharDecicions.setIsConfirmed(null);
 
 			Optional<ButtonType> queryResult = newAlert.showAndWait();
 			if (queryResult.get() == ButtonType.OK){
-			//	InformationExpert.setIsConfirmed(true);	
+				info.CharDecicions.setIsConfirmed(true);	
 			}
 			else {
-			//	InformationExpert.setIsConfirmed(false);	
+				info.CharDecicions.setIsConfirmed(false);	
 			}
 			break;							
 		default:
@@ -88,10 +87,115 @@ public class Alerts extends Application {
 	}	
 
 	/**
+	 * Chose the stage of the adv / dis
+	 * @param value of the adv / dis
+	 */
+	public int createNewAlert(int value) {
+		Alert newAlert = new Alert(AlertType.INFORMATION);
+		newAlert.setTitle("Der Eiserne Pfad");
+		newAlert.setHeaderText("Wähle deine Stufe!");
+		newAlert.setContentText("Welche Stufe möchtest du?");
+
+		ButtonType buttonStageOne = new ButtonType("Stufe 1");
+		ButtonType buttonStageTwo = new ButtonType("Stufe 2");
+		ButtonType buttonStageThree = new ButtonType("Stufe 3");
+
+		Optional<ButtonType> choiceResult;
+
+		switch (value) {
+		case 12:
+			newAlert.getButtonTypes().setAll(buttonStageOne, buttonStageTwo, ButtonType.CANCEL);
+			choiceResult = newAlert.showAndWait();
+			if (choiceResult.get() == buttonStageOne){				 
+				return 1;	
+			}
+			else if (choiceResult.get() == buttonStageTwo){				 
+				return 2;	
+			}
+			else{
+				return 0;
+			}
+		case 123:
+			newAlert.getButtonTypes().setAll(buttonStageOne, buttonStageTwo, buttonStageThree, ButtonType.CANCEL);
+			choiceResult = newAlert.showAndWait();
+			if (choiceResult.get() == buttonStageOne){				 
+				return 1;	
+			}
+			else if (choiceResult.get() == buttonStageTwo){				 
+				return 2;	
+			}
+			else if (choiceResult.get() == buttonStageThree){				 
+				return 3;	
+			}
+			else{
+				return 0;
+			}
+		case 23:
+			newAlert.getButtonTypes().setAll(buttonStageTwo, buttonStageThree, ButtonType.CANCEL);
+			choiceResult = newAlert.showAndWait();
+			if (choiceResult.get() == buttonStageTwo){				 
+				return 2;	
+			}
+			else if (choiceResult.get() == buttonStageThree){				 
+				return 3;	
+			}
+			else{
+				return 0;
+			}
+		case 31:
+			newAlert.getButtonTypes().setAll(buttonStageThree, ButtonType.CANCEL);
+			choiceResult = newAlert.showAndWait();			
+			if (choiceResult.get() == buttonStageThree){				 
+				return 4;	
+			}
+			else{
+				return 0;
+			}
+		case 29:
+			newAlert.setContentText("Diese Gabe wählen?");
+			newAlert.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
+			choiceResult = newAlert.showAndWait();
+			if (choiceResult.get() == ButtonType.OK){
+				return 29;	
+			}
+			else{
+				return 0;
+			}
+		case 39:
+			newAlert.setContentText("Diese Gabe wählen?");
+			newAlert.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
+			choiceResult = newAlert.showAndWait();
+			if (choiceResult.get() == ButtonType.OK){
+				return 39;	
+			}
+			else{
+				return 0;
+			}
+		case 239:
+			newAlert.setContentText("Diese Gabe wählen? Welche Stufe?");
+			newAlert.getButtonTypes().setAll(buttonStageTwo, buttonStageThree, ButtonType.CANCEL);
+			choiceResult = newAlert.showAndWait();
+			if (choiceResult.get() == buttonStageTwo){
+				return 29;	
+			}
+			if (choiceResult.get() == buttonStageThree){
+				return 39;	
+			}
+			else{
+				return 0;
+			}
+		default:
+			return 0;
+		}
+	}
+
+	/**
 	 * Since this class extends application, 
 	 * this method needs to exist for the compiling process to work. Please ignore it.
 	 * @deprecated - should never be used, if everything works
 	 */
 	@Override
 	public void start(Stage arg0){}
+
+
 }

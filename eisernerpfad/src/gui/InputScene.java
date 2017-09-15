@@ -66,9 +66,10 @@ public class InputScene {
 	private int availableBonuses;
 	private int adv;
 	private int dis;
-	private int costs;
-	private ArrayList<String> listChosenAdv;
-	private ArrayList<String> listChosenDis;
+	private int costsAdv;
+	private int costsDis;
+	private ArrayList<Integer> listChosenAdv;
+	private ArrayList<Integer> listChosenDis;
 
 	/**
 	 * Number of input scenes: <br>
@@ -226,7 +227,22 @@ public class InputScene {
 					System.out.println("Stärke: " + info.getCharAttributeStrength() + "\n" + "Gewandtheit: " + info.getCharAttributeDexterity()
 					+ "\nIntelligenz: " + info.getCharAttributeIntelligence());
 					break;
-				case 5:					
+				case 5:
+					ArrayList<String> selectedAdv = new ArrayList<>();
+					ArrayList<String> selectedDis = new ArrayList<>();
+					if(adv-dis == 0){
+						for(Integer i: listChosenAdv){
+							selectedAdv.add(info.getAdvantages()[i].getKey());
+						}
+						for(Integer i: listChosenDis){
+							selectedDis.add(info.getDisadvantages()[i].getKey());
+						}
+					}
+					else{
+						alerts.createNewAlert("Du hast noch Vorteile übrig", 2);
+						return;
+					}
+					System.out.println("Gewählte Vorteile: " + selectedAdv + "\nGewählte Nachteile: " + selectedDis);
 					break;
 				default:
 					break;
@@ -579,12 +595,12 @@ public class InputScene {
 			nodes.add(buttonDexMinus);
 			nodes.add(buttonIntPlus);
 			nodes.add(buttonIntMinus);		
-			buttonNextStep.setLayoutY(120); // TODO change value
+			buttonNextStep.setLayoutY(120);
 			nodes.add(buttonNextStep);
 			break;
 		case 5:
 			adv = info.getCharAdvDis().getKey();
-			if(info.getCharRace().equals("NEHRIM")){
+			if(info.getCharCulture().equals("NEHRIM_FREE")){
 				adv++;
 			}
 			String path = info.getCharPath();
@@ -614,34 +630,34 @@ public class InputScene {
 			VBox vBoxAdv = new VBox();
 			scrollAdv.setContent(vBoxAdv);
 			Pair<String, Integer>[] listAdv = info.getAdvantages();
-			ToggleSet<ToggleButton> toggleSet = new ToggleSet<>(adv);
+			ToggleSet<ToggleButton> toggleSetAdv = new ToggleSet<>(adv);
 			for (int i = 0; i < listAdv.length; i++){
 				String name = listAdv[i].getKey();
-				costs = listAdv[i].getValue();
-				while (costs > 9) {
-					costs = costs / 10;
+				costsAdv = listAdv[i].getValue();
+				while (costsAdv > 9) {
+					costsAdv = costsAdv / 10;
 				}				
 				ToggleButton toggleButton = new ToggleButton();
-				toggleButton.setText(name + " (" + costs + ")");				
-
+				toggleButton.setText(name + " (" + costsAdv + ")");				
+				toggleButton.setUserData(i);
+				
 				toggleButton.selectedProperty().addListener((obs, wasChecked, isNowChecked) -> {
+					int cash = listAdv[(int) toggleButton.getUserData()].getValue();
+					while (cash > 9) {
+						cash = cash / 10;
+					}	
 					if (isNowChecked) {
-						toggleSet.addToggle(toggleButton);
-						toggleButton.setUserData(name);
-						adv -= costs;                  
+						toggleSetAdv.addToggle(toggleButton);
+						adv -= cash;                  
 					} else {
-						toggleSet.removeToggle(toggleButton);
-						toggleButton.setUserData(0);
-						adv += costs;
+						toggleSetAdv.removeToggle(toggleButton);
+						adv += cash;
 					}
 					labelAdvValue.setText(Integer.toString(adv));
-					listChosenAdv = new ArrayList<String>();
-					for (Node n: vBoxAdv.getChildren()) {
-						if(n.getUserData() instanceof String) {
-							listChosenAdv.add((String) n.getUserData());
-						}
+					listChosenAdv = new ArrayList<Integer>();
+					for (Node n: toggleSetAdv.getSelectedToggles()) {
+						listChosenAdv.add((Integer) n.getUserData());
 					}
-					System.out.println("Vorteile: " + listChosenAdv);
 				});
 				vBoxAdv.getChildren().add(toggleButton);
 			}
@@ -657,36 +673,34 @@ public class InputScene {
 			ToggleSet<ToggleButton> toggleSetDis = new ToggleSet<>(dis);
 			for (int i = 0; i < listDis.length; i++){
 				String name = listDis[i].getKey();
-				costs = listDis[i].getValue();
-				while (costs > 9) {
+				costsDis = listDis[i].getValue();
+				while (costsDis > 9) {
 					if(i == 0) {
-						System.out.println(costs); // TODO costs is, correctly so, 12 here
 					}
-					costs = costs / 10;
+					costsDis = costsDis / 10;
 				}	
-
-				if(i == 0) {
-					System.out.println(costs); // TODO costs is, correctly so, 1 here
-				}
 				
 				ToggleButton toggleButton = new ToggleButton();
-				toggleButton.setUserData(name);
-				toggleButton.setText(name + " (" + costs + ")"); // TODO costs is, correctly so, still 1		
+				toggleButton.setUserData(i);
+				toggleButton.setText(name + " (" + costsDis + ")");
 
 				toggleButton.selectedProperty().addListener((obs, wasChecked, isNowChecked) -> {
-
-					if(name.equals("Aberglaube")) {
-						System.out.println(costs); // TODO why is costs here 2?
-					}
+					int cash = listDis[(int) toggleButton.getUserData()].getValue();
+					while (cash > 9) {
+						cash = cash / 10;
+					}	
 					if (isNowChecked) {
 						toggleSetDis.addToggle(toggleButton);
-						System.out.println(dis + " " + costs);
-						dis -= costs;	             
+						dis -= cash;	             
 					} else {
 						toggleSetDis.removeToggle(toggleButton);
-						dis += costs;
+						dis += cash;
 					}
 					labelDisValue.setText(Integer.toString(dis));
+					listChosenDis = new ArrayList<Integer>();
+					for (Node n: toggleSetDis.getSelectedToggles()) {
+						listChosenDis.add((Integer) n.getUserData());
+					}
 				});
 				vBoxDis.getChildren().add(toggleButton);	           
 			}
